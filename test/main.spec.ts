@@ -158,7 +158,14 @@ describe('GeoJSON exporter long test file', function() {
     });
 
     it('should export correct metadata', function(){
-        assert.equal(geoJson.properties.time, gpxJson.metadata.time);
+        assert.equal(geoJson.features[0].properties.name, gpxJson.trk[0].name);
+        assert.equal(geoJson.features[0].properties.type, gpxJson.trk[0].type);
+    });
+
+    it('should export coordinates as positional arrays', function() {
+      const coordinates = geoJson.features[0].geometry.coordinates;
+      expect(coordinates.length).toBe(gpxJson.trk[0].trkseg.trkpt.length);
+      expect(coordinates[0]).toEqual([-75.720004, 39.843201, 86.2]);
     });
 
     it('should parse extensions', function() {

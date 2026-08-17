@@ -200,13 +200,6 @@ class GpxParser {
         let geoJson = {
             type: "FeatureCollection",
             features: [],
-            properties: {
-                name: gpxJson.metadata.name,
-                desc: gpxJson.metadata.desc,
-                time: gpxJson.metadata.time,
-                author: gpxJson.metadata.author,
-                link: gpxJson.metadata.link,
-            },
         };
         gpxJson.trk.forEach((track, index) => {
             let feature = {
@@ -226,12 +219,11 @@ class GpxParser {
                 },
             };
             track.trkseg.trkpt.forEach((pt, index) => {
-                let geoPt = {
-                    lon: pt.lon,
-                    lat: pt.lat,
-                    ele: pt.ele,
-                    time: pt.time,
-                };
+                let geoPt = [
+                    pt.lon,
+                    pt.lat,
+                    pt.ele,
+                ];
                 feature.geometry.coordinates.push(geoPt);
             });
             geoJson.features.push(feature);
@@ -254,12 +246,11 @@ class GpxParser {
                 },
             };
             route.rtept.forEach((pt) => {
-                let geoPt = {
-                    lon: pt.lon,
-                    lat: pt.lat,
-                    ele: pt.ele,
-                    time: pt.time,
-                };
+                let geoPt = [
+                    pt.lon,
+                    pt.lat,
+                    pt.ele,
+                ];
                 feature.geometry.coordinates.push(geoPt);
             });
             geoJson.features.push(feature);
@@ -279,11 +270,11 @@ class GpxParser {
                 },
             };
             feature.geometry.coordinates = [
-                {
-                    lon: pt.lon,
-                    lat: pt.lat,
-                    ele: pt.ele,
-                },
+                [
+                    pt.lon,
+                    pt.lat,
+                    pt.ele,
+                ],
             ];
             geoJson.features.push(feature);
         });
